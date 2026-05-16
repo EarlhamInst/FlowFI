@@ -27,7 +27,7 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QH
                              QLineEdit, QCheckBox, QPushButton, QProgressBar, QLabel, QFileDialog, QScrollArea, QFrame,
                              QAction, QMessageBox,QComboBox,QTabWidget,QSplitter, QFileSystemModel,QTreeView,QSlider,QMenu,QTextEdit,QSizePolicy,QDialog,QActionGroup, QDialogButtonBox, QGridLayout, QProgressDialog, QSplashScreen)
 from PyQt5.QtCore import QThread, pyqtSignal,  QTimer, Qt, QDir
-from PyQt5.QtGui import QPixmap, QImage, QIcon, QPainter, QBrush, QPen, QColor
+from PyQt5.QtGui import QPixmap, QImage, QIcon, QPainter, QBrush, QPen, QColor,QIcon
 import matplotlib
 import matplotlib.colors as mcolors
 
@@ -41,6 +41,16 @@ from skimage.measure import label, regionprops
 from skimage.segmentation import watershed
 from skimage.feature import peak_local_max,canny
 from scipy.stats import skew, binned_statistic
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 EVAL = False
 #SIM = False
@@ -412,11 +422,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("FlowFI: Flow cytometry Feature Importance")
-        
-        # Set window icon. 
-        # To use your own logo, create a 'logo.png' file (64x64 pixels is a good size)
-        # and place it in the same directory as this script.
-        logo_path = 'logo.png'
+        logo_path = resource_path("logo.png")
         if os.path.exists(logo_path):
             self.setWindowIcon(QIcon(logo_path))
 
