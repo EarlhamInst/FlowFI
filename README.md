@@ -146,6 +146,10 @@ Before connecting, you must have an X11 display server installed and running on 
 python `flowfi.py`
 ```
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
  
 ## References
 [1] He, X., Cai, D., & Niyogi, P. (2005). Laplacian score for feature selection. Advances in neural information processing systems, 18.  
