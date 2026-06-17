@@ -147,7 +147,7 @@ Before connecting, you must have an X11 display server installed and running on 
 python `flowfi.py`
 ```
 
-## Release Motes
+## Release Notes - v0.5.1
 
 * Fixed an issue where single channel aggregation depended on multichannel aggregation to be run first.
 * Fixed an issue with opencv causing the Windows application to enter an infinite loop.
