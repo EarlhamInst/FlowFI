@@ -5,6 +5,16 @@ import re
 import time
 import traceback
 
+import ctypes
+
+# Tell Windows this is a unique application, not just a generic Python script
+if sys.platform == "win32":
+    myappid = 'flowfi.cytometry.featureimportance.app.0.5.1'
+    try:
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+    except Exception as e:
+        print(f"Failed to set taskbar ID: {e}")
+
 # Third-party imports for GUI (needed immediately for splash screen)
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
                              QLineEdit, QCheckBox, QPushButton, QProgressBar, QLabel, QFileDialog, QScrollArea, QFrame,
@@ -443,7 +453,16 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("FlowFI: Flow cytometry Feature Importance")
         logo_path = resource_path("logo.png")
         if os.path.exists(logo_path):
-            self.setWindowIcon(QIcon(logo_path))
+            print(f"Path to icon exists: {logo_path}") # Confirms path resolution and file existence
+            icon = QIcon(logo_path)
+            if not icon.isNull():
+                print("Successfully loaded icon!")
+                self.setWindowIcon(icon)
+            else:
+                print(f"QIcon failed to load image despite path existence. Potential issue with file format ({logo_name}) or file corrupt/unreadable by Qt.")
+        else:
+            print(f"Icon path not found: {logo_path}") # Confirms path issue (likely post-packaging typo or function logic)
+
 
         self.setGeometry(100, 100, 800, 600)
         self.boots_param = BOOT
